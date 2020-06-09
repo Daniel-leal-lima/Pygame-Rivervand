@@ -3,7 +3,7 @@ import Box2D as b2
 
 pygame.init()
 tela = pygame.display.set_mode((1280, 720))
-pygame.display.set_caption("Mitomagia")
+pygame.display.set_caption("Riverfand")
 cor = (100, 100, 100)
 CorFundo = (0,0,0)
 corP1 = (200,0,0)
@@ -19,12 +19,10 @@ Player2 = pygame.Rect(400,410,20,40)
 move1=0
 move2=0
 
-
 #gravidade
 gravity = b2.b2Vec2(0,2)
 
 world = b2.b2World(gravity,True) #Mundo
-
 
 #obj
 
@@ -34,47 +32,22 @@ objdef.angle=0
 objdef.type=b2.b2_dynamicBody
 body = world.CreateBody(objdef)
 
-while True:  # LOOP PRINCIPAL
+while True:                                 ####### LOOP PRINCIPAL #########
+
+    Keys = pygame.key.get_pressed()
+    if Keys[pygame.K_d]:
+        Player1.move_ip(20,0)
+    if Keys[pygame.K_a]:                ######################################
+        Player1.move_ip(-20,0)          ############# MOVIMENTAÇÂO ###########
+    if Keys[pygame.K_KP6]:              ######################################
+        Player2.move_ip(20,0)
+    if Keys[pygame.K_KP4]:
+        Player2.move_ip(-20,0)
     for event in pygame.event.get():
+        #VARIAVEIS GLOBAI
         if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_d:
-                #Player1.move_ip(20,0)
-                move1=1
-            if event.key == pygame.K_a:
-                #Player1.move_ip(-20,0)
-                move1=-1
-            if event.key == pygame.K_KP6:
-                #Player2.move_ip(20,0)
-                move2=1
-            if event.key == pygame.K_KP4:
-                #Player2.move_ip(-20,0)
-                move2=-1
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_d:
-                #Player1.move_ip(20,0)
-                move1=0
-            if event.key == pygame.K_a:
-                #Player1.move_ip(-20,0)
-                move1=0
-            if event.key == pygame.K_KP6:
-                #Player2.move_ip(20,0)
-                move2=0
-            if event.key == pygame.K_KP4:
-                #Player2.move_ip(-20,0)
-                move2=0
-    if move1!=0:
-        if move1 == 1:
-            Player1.move_ip(20,0)
-        else:
-            Player1.move_ip(-20,0)
-    if move2!=0:
-        if move2 == 1:
-            Player2.move_ip(20,0)
-        else:
-            Player2.move_ip(-20,0)
+            exit()
+
 
     tela.fill(CorFundo)
     pygame.draw.rect(tela, cor, (350, 450, 600, 50))  # quadrado cinza
