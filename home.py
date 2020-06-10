@@ -1,7 +1,12 @@
-import pygame, sys
+import pygame
 import Box2D as b2
+import Menu
 
 pygame.init()
+
+pygame.mixer.music.load('src/Audio/happy.wav')
+pygame.mixer.music.play(-1)
+
 tela = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("Riverfand")
 cor = (100, 100, 100)
@@ -14,7 +19,11 @@ FPS = 30
 TaxaAtuaizacao = pygame.time.Clock()
 
 #   variaveis
-Player1 = pygame.Rect(100,410,20,40)
+x1=390
+y1=410
+x2=400
+y2=410
+Player1 = pygame.Rect(x1,y1,20,40)
 Player2 = pygame.Rect(400,410,20,40)
 move1=0
 move2=0
@@ -32,6 +41,7 @@ objdef.angle=0
 objdef.type=b2.b2_dynamicBody
 body = world.CreateBody(objdef)
 
+sc = 1
 while True:                                 ####### LOOP PRINCIPAL #########
 
     Keys = pygame.key.get_pressed()
@@ -43,15 +53,23 @@ while True:                                 ####### LOOP PRINCIPAL #########
         Player2.move_ip(20,0)
     if Keys[pygame.K_KP4]:
         Player2.move_ip(-20,0)
+    if Keys[pygame.K_1]:
+        sc = 2
+
+
+
     for event in pygame.event.get():
-        #VARIAVEIS GLOBAI
         if event.type == pygame.QUIT:
             exit()
 
+    if sc==1:
+        tela.fill(CorFundo)                 ############ LIMPA TELA #############
+        pygame.draw.rect(tela, cor, (350, 450, 600, 50))  # quadrado cinza
+        pygame.draw.rect(tela, corP1, Player1)  # quadrado cinza
+        pygame.draw.rect(tela, corP2, Player2)  # quadrado cinza
+    elif sc==2:
+        Menu.DrawFase(tela,corP1)
 
-    tela.fill(CorFundo)
-    pygame.draw.rect(tela, cor, (350, 450, 600, 50))  # quadrado cinza
-    pygame.draw.rect(tela, corP1, Player1)  # quadrado cinza
-    pygame.draw.rect(tela, corP2, Player2)  # quadrado cinza
+
     pygame.display.update()
     TaxaAtuaizacao.tick(FPS)
