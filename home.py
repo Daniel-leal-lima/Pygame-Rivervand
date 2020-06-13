@@ -30,6 +30,7 @@ x2=400
 y2=410
 Player1 = pygame.Rect(x1,y1,20,40)
 Player2 = pygame.Rect(400,410,20,40)
+Plataforma= pygame.Rect(350, 450, 600, 50)
 move1=0
 move2=0
 
@@ -56,7 +57,7 @@ body = world.CreateBody(objdef)
 Jump=True
 sc = 1
 pMomentum =0
-
+Mudou=False
 
 
 mapa=["                                              ",
@@ -67,52 +68,53 @@ mapa=["                                              ",
       "                                              ",
       "                                              ",
       "         ppppppppppppppppppppppppp           ",
-
+      "         ppppppppppppppppppppppppp           ",
+      "         ppppppppppppppppppppppppp           ",
+      "         ppppppppppppppppppppppppp           ",
+      "         ppppppppppppppppppppppppp           ",
+      "         ppppppppppppppppppppppppp           ",
+      "         ppppppppppppppppppppppppp           ",
+      "         ppppppppppppppppppppppppp           ",
+      "         ppppppppppppppppppppppppp           ",
+      "         ppppppppppppppppppppppppp           ",
+      "         ppppppppppppppppppppppppp           ",
+      "         ppppppppppppppppppppppppp           ",
       ]
+
 while True:                                 ####### LOOP PRINCIPAL #########
 
 
-    #tela.fill(CorFundo)                 ############ LIMPA TELA #############
-    tela.blit(img,(0,0))
-
-    for Y,layer in enumerate(mapa):
-        for X,tile in enumerate(layer):
-            if tile =="p":
-                tela.blit(tt,(X*30,Y*32))
-                print(tile)
+    if sc==1:                            #####################################
+        #tela.fill(CorFundo)             ############ TELA: PARTIDA ##########
+        tela.blit(img,(0,0))             #####################################
 
 
-    if Player1.y > 720-Player1.height: ########################################
-        pMomentum=-pMomentum            ##########  GRAVIDADE ###############
-    else:                                ###################################
-        pMomentum+=0.9
-    Player1.y+=pMomentum
-
-    Keys = pygame.key.get_pressed()
-    if Keys[pygame.K_d]:
-        Player1.move_ip(20,0)
-    if Keys[pygame.K_a]:                ######################################
-        Player1.move_ip(-20,0)          ############# MOVIMENTAÇÂO ###########
-    if Keys[pygame.K_KP6]:              ######################################
-        Player2.move_ip(20,0)
-    if Keys[pygame.K_KP4]:
-        Player2.move_ip(-20,0)
-    if Keys[pygame.K_1]:
-        sc = 2
-
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            exit()
-
-    if sc==1:
-        #tela.fill(CorFundo)                 ############ LIMPA TELA #############
-        #tela.blit(img,(0,0))
-        pygame.draw.rect(tela, cor, (350, 450, 600, 50))  # quadrado cinza
+        for Y,layer in enumerate(mapa):
+            for X,tile in enumerate(layer):
+                if tile =="p":
+                    tela.blit(tt,(X*30,Y*32))
+        pygame.draw.rect(tela, cor, Plataforma)  # quadrado cinza
         pygame.draw.rect(tela, corP1, Player1)  # quadrado cinza
         pygame.draw.rect(tela, corP2, Player2)  # quadrado cinza
-    elif sc==2:
-        Menu.DrawFase(tela,corP1)
+        Keys = pygame.key.get_pressed()
+        if Keys[pygame.K_d]:
+            Player1.move_ip(20,0)
+        if Keys[pygame.K_a]:                ######################################
+            Player1.move_ip(-20,0)          ############# MOVIMENTAÇÂO ###########
+        if Keys[pygame.K_KP6]:              ######################################
+            Player2.move_ip(20,0)
+        if Keys[pygame.K_KP4]:
+            Player2.move_ip(-20,0)
+        if Keys[pygame.K_1]:
+            sc = 2
+
+    elif sc==2:                                 ###################################
+        Mudou=Menu.DrawFase(tela,corP1,Mudou)   ######## TELA: SELEÇÃO CHAR #######
+                                                ###################################
+
+    for event in pygame.event.get():            ###### EVENTOS ######
+        if event.type == pygame.QUIT:
+            exit()
 
 
     pygame.display.update()
