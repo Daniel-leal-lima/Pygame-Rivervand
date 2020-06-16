@@ -1,8 +1,19 @@
 import pygame
-import Box2D as b2
 import Menu
-
+import socket
 pygame.init()
+
+
+##########################################
+UDP_IP = "127.0.0.1"
+UDP_PORT = 9999                             ###################### SERVER ######################
+MESSAGE = ""
+sock = socket.socket(socket.AF_INET, # Internet
+                     socket.SOCK_DGRAM) # UDP
+
+# sock.bind((UDP_IP, UDP_PORT))
+sock.bind((UDP_IP, UDP_PORT))
+###########################################
 
 pygame.mixer.music.load('src/Audio/happy.wav')
 pygame.mixer.music.play(-1)
@@ -34,54 +45,49 @@ Plataforma= pygame.Rect(350, 450, 600, 50)
 move1=0
 move2=0
 
-#gravidade
-gravity = b2.b2Vec2(0,10)
-world = b2.b2World(gravity,True) #Mundo
 
 #obj
 
-ppm=5
-
-bolabodydef=b2.b2BodyDef()
-bolabodydef.position(60)
-bolabodydef.angle=0
-bolabodydef.type = b2.b2_dynamicBody
-body= world.CreateBody( bolabodydef)
-
-
-objdef= b2.b2BodyDef()
-objdef.position=(10,10)
-objdef.angle=0
-objdef.type=b2.b2_dynamicBody
-body = world.CreateBody(objdef)
 Jump=True
 sc = 1
 pMomentum =0
 Mudou=False
 
 
-mapa=["                                              ",
-      "                                              ",
-      "              pppp                            ",
-      "                                              ",
-      "       pppppp                                 ",
-      "                                              ",
-      "                                              ",
-      "         ppppppppppppppppppppppppp           ",
-      "         ppppppppppppppppppppppppp           ",
-      "         ppppppppppppppppppppppppp           ",
-      "         ppppppppppppppppppppppppp           ",
-      "         ppppppppppppppppppppppppp           ",
-      "         ppppppppppppppppppppppppp           ",
-      "         ppppppppppppppppppppppppp           ",
-      "         ppppppppppppppppppppppppp           ",
-      "         ppppppppppppppppppppppppp           ",
-      "         ppppppppppppppppppppppppp           ",
+mapa=["                                             ",
+      "                                             ",
+      "              pppp                           ",
+      "                                             ",
+      "       pppppp                                ",
+      "p                                            ",
+      "p                   ppppppppp                ",
+      "p        ppppppppppppppppppppppppp           ",
+      "P        ppppppppppppppppppppppppp           ",
+      "p        ppppppppppppppppppppppppp           ",
+      "P        ppppppppppppppppppppppppp           ",
+      "p        ppppppppppppppppppppppppp           ",
+      "p        ppppppppppppppppppppppppp           ",
+      "p        ppppppppppppppppppppppppp           ",
+      "p        ppppppppppppppppppppppppp           ",
+      "p        ppppppppppppppppppppppppp           ",
+      "p        ppppppppppppppppppppppppp           ",
       "         ppppppppppppppppppppppppp           ",
       "         ppppppppppppppppppppppppp           ",
       ]
 
 while True:                                 ####### LOOP PRINCIPAL #########
+    sock = socket.socket(socket.AF_INET, # Internet
+                       socket.SOCK_DGRAM) # UDP
+    MESSAGE=str(Player1.x)
+
+    try:
+        data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
+        print("valor é :" + str(data))
+    except:
+        sock.sendto(MESSAGE.encode(), (UDP_IP, UDP_PORT))
+
+
+
 
 
     if sc==1:                            #####################################
@@ -107,7 +113,6 @@ while True:                                 ####### LOOP PRINCIPAL #########
             Player2.move_ip(-20,0)
         if Keys[pygame.K_1]:
             sc = 2
-
     elif sc==2:                                 ###################################
         Mudou=Menu.DrawFase(tela,corP1,Mudou)   ######## TELA: SELEÇÃO CHAR #######
                                                 ###################################
