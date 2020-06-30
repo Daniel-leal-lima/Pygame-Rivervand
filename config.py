@@ -1,0 +1,36 @@
+# Game options
+WIDTH = 1280
+HEIGHT = 720
+FPS = 30
+TITLE = "RIVERFAND"
+
+#player properties
+PLAYER_ACC=3
+PLAYER_FRICTION = -0.12
+PLAYER_GRAV=0.8
+
+# COLORS
+WHITE=(255,255,255)
+BLACK=(0,0,0)
+GREEN=(0,255,0)
+RED=(190,0,0)
+BLUE=(0,0,190)
+YELLOW=(0,255,255)
+
+#Bullet velocity
+BULLET_VEL=20
+
+#PLATAFORMAS
+PLATAFORM_LIST=[(250, HEIGHT - 200, WIDTH - 450, 70, 2), # GROUND[2]
+            (800,390,150,50,1),
+            (300,390,150,50,1),
+            (600,100,150,50,1)]
+
+
+#VIDAS
+LIFE_LIST=[(100,HEIGHT-80,0),
+           (200,HEIGHT-80,0),
+           (300,HEIGHT-80,0),
+           (900,HEIGHT-80,1),
+           (1000,HEIGHT-80,1),
+           (1100,HEIGHT-80,1)]
